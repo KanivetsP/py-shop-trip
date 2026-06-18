@@ -11,19 +11,28 @@ def shop_trip() -> None:
     with open(config_path) as f:
         data = json.load(f)
 
-    customers = [Customer(**c) for c in data["customers"]]
+    customers = []
+    for cus in data["customers"]:
+        car = Car(cus["car"]["brand"], cus["car"]["fuel_consumption"])
+        customers.append(Customer(
+            name=cus["name"],
+            location=cus["location"],
+            product_cart=cus["product_cart"],
+            money=cus["money"],
+            car=car
+        ))
+
     shops = [Shop(**s) for s in data["shops"]]
     fuel_price = data["FUEL_PRICE"]
 
     for customer in customers:
         print(f"{customer.name} has {customer.money} dollars")
-        car = Car(customer.car["brand"], customer.car["fuel_consumption"])
         best_price = float("inf")
         best_shop = None
 
         for shop in shops:
             distance = customer.calculate_distance(shop)
-            one_way = car.calculate_fuel_cost(distance, fuel_price)
+            one_way = customer.car.calculate_fuel_cost(distance, fuel_price)
             road = one_way * 2
             purchase_cost = 0
 

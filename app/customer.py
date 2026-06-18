@@ -2,7 +2,6 @@ from __future__ import annotations
 from math import sqrt
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from app.car import Car
     from app.shop import Shop
 
 
@@ -13,7 +12,7 @@ class Customer:
                  location: list,
                  product_cart: dict,
                  money: float,
-                 car: "Car") -> None:
+                 car: dict) -> None:
         self.name = name
         self.home_location = location
         self.location = location
