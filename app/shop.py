@@ -1,5 +1,5 @@
 from __future__ import annotations
-from datetime import datetime
+import datetime
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from app.customer import Customer
@@ -13,7 +13,7 @@ class Shop:
         self.products = products
 
     def print_bill(self, customer: "Customer") -> None:
-        now = datetime.now()
+        now = datetime.datetime.now()
         formatted_date = now.strftime("%d/%m/%Y %H:%M:%S")
         print(f"Date: {formatted_date}")
         print(f"Thanks, {customer.name}, for your purchase!")

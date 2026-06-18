@@ -10,7 +10,7 @@ from app.main import shop_trip
 def test_shop_trip_output(monkeypatch):
     datetime_mock = MagicMock()
     datetime_mock.now.return_value = real_datetime(2021, 1, 4, 12, 33, 41)
-    monkeypatch.setattr("app.shop.datetime", datetime_mock)
+    monkeypatch.setattr("app.shop.datetime.datetime", datetime_mock)
 
     f = StringIO()
 

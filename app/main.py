@@ -1,12 +1,14 @@
 import json
-import math
-from app.car import Car
-from app.shop import Shop
-from app.customer import Customer
+import os
 
 
 def shop_trip() -> None:
-    with open("app/config.json") as f:
+    from app.car import Car
+    from app.shop import Shop
+    from app.customer import Customer
+
+    config_path = os.path.join(os.path.dirname(__file__), "config.json")
+    with open(config_path) as f:
         data = json.load(f)
 
     customers = [Customer(**c) for c in data["customers"]]
@@ -20,13 +22,7 @@ def shop_trip() -> None:
         best_shop = None
 
         for shop in shops:
-            customer_x = customer.location[0]
-            customer_y = customer.location[1]
-            shop_x = shop.location[0]
-            shop_y = shop.location[1]
-            distance = math.sqrt(
-                (shop_x - customer_x) ** 2 + (shop_y - customer_y) ** 2
-            )
+            distance = customer.calculate_distance(shop)
             one_way = car.calculate_fuel_cost(distance, fuel_price)
             road = one_way * 2
             purchase_cost = 0
